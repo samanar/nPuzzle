@@ -1,16 +1,16 @@
 <template>
   <div>
-
     <v-btn @click="shuffle">shuffle</v-btn>
-    <v-card class="puzzle_container">
+    <v-card class="puzzle_container" :class="{'puzzle_container_win': win}">
       <v-card
         outlined
-        v-for="(number , index) in numbers"
-        :key="index"
+        v-for="(number ,index) in numbers"
+        :key="number"
         @click="swapWithZero(index)"
-        :class="{'black_box' : number === 0}"
-        :disabled="number === 0"
-        class="number_container puzzle-item">
+        class="number_container puzzle_item"
+        :class="{'black_box' : number === 0, 'black_box_win': number === 0 && win , 'puzzle_item_win' : win}"
+        :disabled="number === 0 || win"
+      >
         <v-responsive :aspect-ratio="1">
           <v-card-title class="mx-auto my-auto text-center card_number">
             {{number}}
@@ -29,7 +29,7 @@
                 rowSize: 4,
                 colSize: 4,
                 numbers: [],
-                win: false,
+                win: true,
             }
         },
         created() {
@@ -142,22 +142,35 @@
 </script>
 
 <style scoped>
-  .puzzle-item {
+  .puzzle_item {
     display: flex;
     transition: transform 1s;
     flex: 1 0 25%;
   }
 
+  .puzzle_item_win {
+    border: 2px solid green !important;
+  }
+
   .puzzle_container {
-    margin: 0 auto;
+    max-width: 500px;
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .puzzle_container_win {
+    border: 5px solid green;
   }
 
   .black_box {
     background-color: black;
     border: none;
     border-radius: 0 !important;
+  }
+
+  .black_box_win {
+    color: green;
+    background-color: green;
   }
 
 
