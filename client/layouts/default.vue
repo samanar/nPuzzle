@@ -4,6 +4,8 @@
       v-model="drawer"
       fixed
       app
+      color="primary"
+      dark
     >
       <v-list>
         <v-list-item
@@ -23,19 +25,14 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
+      color="primary"
+      dark
       fixed
-      dense
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-      <v-toolbar-title v-text="title"/>
+      <v-toolbar-title style="font-family: 'Roboto Light',serif"><h3>{{title}}</h3></v-toolbar-title>
       <v-spacer/>
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-content class="content_background">
       <v-container>
@@ -77,5 +74,10 @@
 <style scoped>
   .content_background {
     background-color: #f0f0f0;
+  }
+
+  .logo_container {
+    height: 100% !important;
+    width: 70px !important;
   }
 </style>
