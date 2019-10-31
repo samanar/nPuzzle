@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-btn @click="shuffle">shuffle</v-btn>
     <v-card class="puzzle_container" :class="{'puzzle_container_win': win}">
       <v-card
         outlined
@@ -8,6 +7,7 @@
         :key="number"
         @click="swapWithZero(index)"
         class="number_container puzzle_item"
+        :style="{flex : '1 0 ' + puzzle_item_size + '%'}"
         :class="{'black_box' : number === 0, 'black_box_win': number === 0 && win , 'puzzle_item_win' : win}"
         :disabled="number === 0 || win"
       >
@@ -24,12 +24,12 @@
 <script>
     export default {
         name: "puzzle",
+        props: ['rowSize', 'colSize'],
         data() {
             return {
-                rowSize: 4,
-                colSize: 4,
                 numbers: [],
-                win: true,
+                win: false,
+                puzzle_item_size: '33'
             }
         },
         created() {
@@ -43,9 +43,7 @@
                         mismatch = true;
                     }
                 }
-                if (!mismatch) {
-                    this.win = true;
-                }
+                this.win = !mismatch;
             },
             shuffle() {
                 this.numbers = this.shuffleArray(this.numbers);
@@ -61,9 +59,20 @@
                 return newArr;
             },
             generateNumbers() {
+                this.numbers = [];
                 let max = this.rowSize * this.colSize;
                 for (let i = 0; i < max; i++) this.numbers.push(i);
                 this.shuffle();
+                switch (this.rowSize) {
+                    case 3:
+                        this.puzzle_item_size = 33;
+                        break;
+                    case 4:
+                        this.puzzle_item_size = 25;
+                        break;
+                    case 5:
+                        this.puzzle_item_size = 20;
+                }
             },
             findZero() {
                 for (let i = 0; i < this.rowSize; i++) {
@@ -96,19 +105,19 @@
                 }
                 switch (direction) {
                     case 'up' :
-                        console.log("moving zero up");
+                        this.$emit('addLog', 'empty cell moved up');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i - 1, coordinates.j);
                         break;
                     case 'down':
-                        console.log("moving zero down");
+                        this.$emit('addLog', 'empty cell moved down');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i + 1, coordinates.j);
                         break;
                     case 'left':
-                        console.log("moving zero left");
+                        this.$emit('addLog', 'empty cell moved left');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i, coordinates.j - 1);
                         break;
                     case 'right' :
-                        console.log("moving zero right");
+                        this.$emit('addLog', 'empty cell moved right');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i, coordinates.j + 1);
                         break;
                 }
@@ -123,6 +132,7 @@
                 let second_num = this.numbers[second_index];
                 this.$set(this.numbers, first_index, second_num);
                 this.$set(this.numbers, second_index, first_num);
+                this.$emit('incrementMoves');
             },
             isZeroCoordinates(i, j) {
                 if (i >= this.rowSize || j >= this.colSize || i < 0 | j < 0) return false;
@@ -137,6 +147,17 @@
                 if (this.isZeroCoordinates(i, j + 1)) this.moveZero('left');
                 if (this.isZeroCoordinates(i, j - 1)) this.moveZero('right');
             },
+        },
+        watch: {
+            win(newVal) {
+                this.$emit('setWin', newVal);
+            },
+            numbers() {
+                this.checkWin();
+            },
+            rowSize() {
+                this.generateNumbers();
+            }
         }
     }
 </script>
@@ -145,7 +166,6 @@
   .puzzle_item {
     display: flex;
     transition: transform 1s;
-    flex: 1 0 25%;
   }
 
   .puzzle_item_win {
@@ -181,7 +201,7 @@
     align-content: center;
     text-align: center;
     justify-content: center;
-    font-size: 4rem;
+    font-size: 2rem;
   }
 
 </style>

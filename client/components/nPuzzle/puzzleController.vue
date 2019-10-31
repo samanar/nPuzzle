@@ -1,0 +1,54 @@
+<template>
+  <v-card class="pa-5">
+    <v-row>
+      <v-col cols="12">
+        <v-select outlined label="difficulty" v-model="selectedLevel" :items="levels" @change="changeLevel"></v-select>
+        <v-btn color="primary" block large @click="emitNewPuzzleGame">Start new game</v-btn>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="12" sm="12" md="12">
+        number of moves:
+        <span class="value" :class="{'value_win': win}">{{moves}}</span>
+      </v-col>
+    </v-row>
+  </v-card>
+</template>
+
+<script>
+    export default {
+        props: ['win', 'moves'],
+        name: "puzzleController",
+        data() {
+            return {
+                selectedLevel: 3,
+                levels: [
+                    {text: 'easy', value: 3},
+                    {text: 'medium', value: 4},
+                    {text: 'hard', value: 5}
+                ]
+            }
+        },
+        methods: {
+            emitNewPuzzleGame() {
+                this.$emit('newPuzzleGame');
+            },
+            changeLevel() {
+                console.log(this.selectedLevel);
+                this.$emit('changeLevel', this.selectedLevel);
+            }
+        }
+    }
+</script>
+
+<style scoped>
+  .value {
+    text-decoration: underline;
+    font-size: 1.1em;
+    margin-left: 10px;
+  }
+
+  .value_win {
+    color: green
+  }
+</style>
