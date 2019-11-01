@@ -19,6 +19,9 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
+            <div class="logo_container">
+              <v-img src="/images/robot.svg"></v-img>
+            </div>
             <v-list-item-title v-text="item.title"/>
           </v-list-item-content>
         </v-list-item>
@@ -39,12 +42,6 @@
         <nuxt/>
       </v-container>
     </v-content>
-    <v-footer
-      fixed
-      app
-    >
-      <span>&copy; copy right stuff here</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -53,6 +50,7 @@
         data() {
             return {
                 drawer: false,
+                title: 'Samanar',
                 items: [
                     {
                         icon: 'mdi-apps',
@@ -65,7 +63,6 @@
                         to: '/inspire'
                     }
                 ],
-                title: 'Samanar'
             }
         }
     }
@@ -79,5 +76,6 @@
   .logo_container {
     height: 100% !important;
     width: 70px !important;
+    border: 1px solid red;
   }
 </style>

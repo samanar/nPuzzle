@@ -52,8 +52,38 @@
                 moves: 0,
                 rowSize: 3,
                 colSize: 3,
+                socket: null,
                 logs: ''
             }
+        },
+        mounted() {
+            let self = this;
+            this.socket = new WebSocket('ws://localhost:8080/ws');
+            console.log(this.socket);
+            console.log("attempting to connect to socket server");
+
+            this.socket.onopen = () => {
+                console.log("socket connected successfully");
+                self.socket.send(JSON.stringify({
+                    title: 'hello',
+                    type: 'nPuzzle',
+                    body: '',
+                    numbers: [1,2,3,4,5,6,7,8,9]
+                }));
+            };
+
+            this.socket.onclose = (event) => {
+                console.log("socket closed !! ", event);
+            };
+
+            this.socket.onerror = (err) => {
+                console.error('socket error ', err);
+            };
+
+            this.socket.onmessage = (msg) => {
+                console.log(msg.data);
+            };
+
         },
         methods: {
             incrementMoves() {

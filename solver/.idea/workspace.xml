@@ -2,17 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab15424-c4f5-4e4c-a273-cc1a76fda6bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../client/components/nPuzzle/puzzleController.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/linux_amd64/github.com/googollee/go-socket.io.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/github.com/googollee/go-engine.io" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/github.com/googollee/go-socket.io" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/github.com/gorilla/websocket" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/components/nPuzzle/puzzle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/components/nPuzzle/puzzle.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/layouts/default.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/solver.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/solver.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/linux_amd64/github.com/googollee/go-socket.io.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/googollee/go-engine.io" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/googollee/go-socket.io" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +69,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

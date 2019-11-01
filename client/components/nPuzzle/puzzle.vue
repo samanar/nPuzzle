@@ -173,24 +173,23 @@
   }
 
   .puzzle_container {
-    max-width: 500px;
     display: flex;
     flex-wrap: wrap;
   }
 
   .puzzle_container_win {
-    border: 5px solid green;
+    border: 5px solid green !important;
   }
 
   .black_box {
-    background-color: black;
-    border: none;
+    background-color: black !important;
+    border: none !important;
     border-radius: 0 !important;
   }
 
   .black_box_win {
-    color: green;
-    background-color: green;
+    color: green !important;
+    background-color: green !important;
   }
 
 

@@ -4,45 +4,91 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/googollee/go-socket.io"
+	"encoding/json"
+	"github.com/gorilla/websocket"
 )
 
-func main()  {
-	fmt.Println("hello world")
-	server, err := socketio.NewServer(nil)
+var upgrader = websocket.Upgrader{
+	ReadBufferSize: 1024,
+	WriteBufferSize: 1024,
+}
+
+type Message struct {
+	Title string `json:"title"`
+	Type string `json:"type"'`
+	Body string `json:"body"`
+	Numbers []int `json:"numbers"`
+}
+
+func homePage(w http.ResponseWriter , r *http.Request) {
+	_ , err := fmt.Fprintf(w , "home page");
 	if err != nil {
 		log.Fatal(err)
 	}
-	server.OnConnect("/", func(s socketio.Conn) error {
-		s.SetContext("")
-		fmt.Println("connected:", s.ID())
-		return nil
-	})
-	server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
-		fmt.Println("notice:", msg)
-		s.Emit("reply", "have "+msg)
-	})
-	server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) string {
-		s.SetContext(msg)
-		return "recv " + msg
-	})
-	server.OnEvent("/", "bye", func(s socketio.Conn) string {
-		last := s.Context().(string)
-		s.Emit("bye", last)
-		s.Close()
-		return last
-	})
-	server.OnError("/", func(e error) {
-		fmt.Println("meet error:", e)
-	})
-	server.OnDisconnect("/", func(s socketio.Conn, msg string) {
-		fmt.Println("closed", msg)
-	})
-	go server.Serve()
-	defer server.Close()
+}
 
-	http.Handle("/socket.io/", server)
-	log.Println("Serving at localhost:8000")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+func wsEndpoint(w http.ResponseWriter , r *http.Request) {
+	upgrader.CheckOrigin = func (r *http.Request) bool {return true}
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	log.Println("client connected successfully")
+	socketHandler(conn)
+
+}
+
+func socketHandler(conn *websocket.Conn) {
+	for {
+		messageType, p, err := conn.ReadMessage()
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
+		var message Message
+		err = json.Unmarshal([]byte(string(p)) , &message)
+		if err != nil {
+			log.Fatal("error when parsing json" , err)
+			return
+		}
+
+		if len(message.Type) == 0 {
+			log.Fatal("type needs to be specified")
+			return
+		}
+
+		switch message.Type {
+		case "nPuzzle":
+			NPuzzleHandler(conn , &message)
+		}
+
+		if err := conn.WriteMessage(messageType, p); err != nil {
+			log.Println(err)
+			return
+		}
+	}
+}
+
+
+func NPuzzleHandler(conn *websocket.Conn , message *Message) {
+	switch message.Title {
+
+	}
+}
+
+func setUpRoutes() {
+	http.HandleFunc("/" , homePage);
+	http.HandleFunc("/ws" , wsEndpoint);
+}
+
+func main()  {
+	fmt.Println("server started on localhost:8000")
+
+	setUpRoutes()
+	err := http.ListenAndServe(":8080" , nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
