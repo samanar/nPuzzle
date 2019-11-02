@@ -4,6 +4,7 @@
       <v-col cols="12">
         <v-select outlined label="difficulty" v-model="selectedLevel" :items="levels" @change="changeLevel"></v-select>
         <v-btn color="primary" block large @click="emitNewPuzzleGame">Start new game</v-btn>
+        <v-btn color="secondary" block large @click="solve" class="mt-2">Solve</v-btn>
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -36,6 +37,9 @@
             changeLevel() {
                 console.log(this.selectedLevel);
                 this.$emit('changeLevel', this.selectedLevel);
+            },
+            solve() {
+                this.$emit('solve');
             }
         }
     }

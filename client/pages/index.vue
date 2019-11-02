@@ -15,6 +15,7 @@
           :win="win"
           :moves="moves"
           v-on:changeLevel="changeLevel"
+          v-on:solve="solve"
           v-on:newPuzzleGame="newPuzzleGame">
         </puzzle-controller>
       </v-col>
@@ -68,7 +69,7 @@
                     title: 'hello',
                     type: 'nPuzzle',
                     body: '',
-                    numbers: [1,2,3,4,5,6,7,8,9]
+                    numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
                 }));
             };
 
@@ -92,6 +93,15 @@
             addLog(text) {
                 this.logs += text + '\n';
                 this.$refs.logs.scrollTop = this.$refs.logs.scrollHeight;
+            },
+            solve() {
+                this.socket.send(JSON.stringify({
+                    type: 'nPuzzle',
+                    title: 'init',
+                    rowSize: this.rowSize,
+                    colSize: this.colSize,
+                    numbers: this.$refs.puzzle.numbers
+                }));
             },
             changeLevel(level) {
                 this.rowSize = level;
