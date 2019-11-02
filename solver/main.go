@@ -87,9 +87,8 @@ func NPuzzleHandler(conn *websocket.Conn, message *Message) {
 		// fmt.Println(puzzle)
 		// fmt.Println(*puzzle.Root)
 		children := (*puzzle.Root).GenerateChildren(puzzle.RowSize, puzzle.ColSize)
-		for _ , n := range children{
-			fmt.Println(n)
-		}
+		fmt.Println(children)
+		
 	}
 }
 

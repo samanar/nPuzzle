@@ -1,7 +1,5 @@
 package nPuzzle
 
-import "fmt"
-
 type NPuzzle struct {
 	RowSize int
 	ColSize int
@@ -57,13 +55,14 @@ func (node *Node) availableMoves(rowSize, colSize int) (int, int, [4]string) {
 	return zeroI, zeroJ, moves
 }
 
-func swapNumbers(numbers *[]int, first, second int) {
-	(*numbers)[first], (*numbers)[second] = (*numbers)[second], (*numbers)[first]
-	
+func swapNumbers(numbers []int, first, second int) []int {
+	result := make([]int, len(numbers))
+	copy(result, numbers)
+	result[first], result[second] = result[second], result[first]
+	return result
 }
 
 func (node Node) generateChild(direction string, zeroI, zeroJ, rowSize, colSize int) *Node {
-	numbers := node.Numbers
 	secondI := zeroI
 	secondJ := zeroJ
 	switch direction {
@@ -76,55 +75,24 @@ func (node Node) generateChild(direction string, zeroI, zeroJ, rowSize, colSize 
 	case "right":
 		secondJ++
 	}
-	
-	swapNumbers(
-		&numbers,
+	result := new(Node)
+	result.Numbers = swapNumbers(
+		node.Numbers,
 		convertCoordinatesToIndex(zeroI, zeroJ, rowSize),
 		convertCoordinatesToIndex(secondI, secondJ, rowSize))
-	
-	result := new(Node)
-	result.Numbers = numbers
 	result.Parent = &node
 	return result
 }
 
-func copyAndAppend(i []*Node, item *Node) []*Node {
-	j := make([]*Node, len(i), len(i)+1)
-	copy(j, i)
-	return append(j, item)
-}
-
-// func (node Node) GenerateChildren(rowSize, colSize int) [4]Node {
-// 	var children [4]Node
-// 	var child Node
-// 	zeroI, zeroJ, moves := node.availableMoves(rowSize, colSize)
-// 	for index, n := range moves {
-// 		if len(n) == 0 {
-// 			continue
-// 		}
-// 		child = node.generateChild(n, zeroI, zeroJ, rowSize, colSize)
-// 		children[index] = child
-// 		for _, test := range children {
-// 			fmt.Println(test)
-// 		}
-// 		fmt.Println("-----------------------")
-// 	}
-// 	// adding generated children to node children ??
-// 	return children
-// }
-
 func (node Node) GenerateChildren(rowSize, colSize int) []*Node {
-	testing := make([]*Node, 4)
-	// var child Node
-	zeroI, zeroJ, _ := node.availableMoves(rowSize, colSize)
-	child1 := node.generateChild("up", zeroI, zeroJ, rowSize, colSize)
-	child2 := node.generateChild("right", zeroI, zeroJ, rowSize, colSize)
-	fmt.Println("child 1", child1)
-	fmt.Println("child 2", child2)
-	
-	testing[0] = child1
-	testing[1] = child2
-	
-	// adding generated children to node children ??
-	return testing
+	var children []*Node
+	zeroI, zeroJ, moves := node.availableMoves(rowSize, colSize)
+	for _, n := range moves {
+		if len(n) == 0 {
+			continue
+		}
+		child := node.generateChild(n, zeroI, zeroJ, rowSize, colSize)
+		children = append(children, child)
+	}
+	return children
 }
