@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	
+	"search/bfs"
+
 	"nPuzzle"
-	
+
 	"github.com/gorilla/websocket"
 )
 
@@ -40,6 +41,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("client connected successfully")
+
 	socketHandler(conn)
 	
 }
@@ -84,11 +86,7 @@ func NPuzzleHandler(conn *websocket.Conn, message *Message) {
 			ColSize: message.ColSize,
 			Root:    &nPuzzle.Node{Numbers: message.Numbers},
 		}
-		// fmt.Println(puzzle)
-		// fmt.Println(*puzzle.Root)
-		children := (*puzzle.Root).GenerateChildren(puzzle.RowSize, puzzle.ColSize)
-		fmt.Println(children)
-		
+		bfs.Solve(&puzzle)
 	}
 }
 

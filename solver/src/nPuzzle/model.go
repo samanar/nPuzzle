@@ -9,9 +9,10 @@ type NPuzzle struct {
 type Node struct {
 	Numbers  []int
 	Parent   *Node
-	Children []*Node
 	Test     int
 }
+
+
 
 func convertIndexToCoordinates(index int, rowSize, colSize int) (int, int) {
 	i := index / rowSize
@@ -94,5 +95,16 @@ func (node Node) GenerateChildren(rowSize, colSize int) []*Node {
 		child := node.generateChild(n, zeroI, zeroJ, rowSize, colSize)
 		children = append(children, child)
 	}
+
 	return children
+}
+
+func (node Node) isGoal() bool {
+	isGoal := true
+	for i:= 1 ; i <= len(node.Numbers)  ; i++ {
+		if node.Numbers[i - 1] != i {
+			isGoal = false
+		}
+	}
+	return isGoal
 }

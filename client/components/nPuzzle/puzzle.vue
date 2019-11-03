@@ -175,6 +175,8 @@
   .puzzle_container {
     display: flex;
     flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .puzzle_container_win {
