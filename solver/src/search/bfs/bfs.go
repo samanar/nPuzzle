@@ -2,6 +2,8 @@ package bfs
 
 import (
 	"fmt"
+	"github.com/gorilla/websocket"
+	"log"
 	"nPuzzle"
 )
 
@@ -9,19 +11,29 @@ type FIFO struct {
 	queue []*nPuzzle.Node
 }
 
-func Solve(puzzle *nPuzzle.NPuzzle) {
+type Reply struct {
+	Title string `json:"title"`
+}
+
+func Solve(puzzle *nPuzzle.NPuzzle , conn *websocket.Conn) {
+	visited := make(map[*nPuzzle.Node]bool)
 	var fifo FIFO
 	fifo.push(puzzle.Root)
 	children := puzzle.Root.GenerateChildren(puzzle.RowSize , puzzle.ColSize)
 	for _,n := range children {
-		fifo.push(n)
+		if !visited[n] {
+			visited[n] = true
+			fifo.push(n)
+		}
 	}
-	fifo.Print()
-	fifo.Pop()
-	fifo.Pop()
-	fifo.Pop()
-	fmt.Println("after poping")
-	fifo.Print()
+	reply := Reply{Title:"saman"}
+	if err := conn.WriteJSON(reply); err != nil {
+		log.Println(err)
+		return
+	}
+	for _,n := range visited {
+		fmt.Println(n)
+	}
 }
 
 func (fifo *FIFO) Pop() *nPuzzle.Node{

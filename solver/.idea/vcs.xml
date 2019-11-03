@@ -2,8 +2,17 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/0xAX/notificator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/codegangsta/envy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/codegangsta/gin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/cpuguy83/go-md2man" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/fsnotify/fsnotify" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/googollee/go-engine.io" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/googollee/go-socket.io" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/gorilla/websocket" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/julesguesnon/gomon" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/mattn/go-shellwords" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/sys" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/gopkg.in/urfave/cli.v1" vcs="Git" />
   </component>
 </project>

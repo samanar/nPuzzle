@@ -48,7 +48,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 
 func socketHandler(conn *websocket.Conn) {
 	for {
-		messageType, p, err := conn.ReadMessage()
+		_, p, err := conn.ReadMessage()
 		if err != nil {
 			log.Println(err)
 			return
@@ -70,11 +70,7 @@ func socketHandler(conn *websocket.Conn) {
 		case "nPuzzle":
 			NPuzzleHandler(conn, &message)
 		}
-		
-		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
-			return
-		}
+
 	}
 }
 
@@ -86,7 +82,7 @@ func NPuzzleHandler(conn *websocket.Conn, message *Message) {
 			ColSize: message.ColSize,
 			Root:    &nPuzzle.Node{Numbers: message.Numbers},
 		}
-		bfs.Solve(&puzzle)
+		bfs.Solve(&puzzle , conn)
 	}
 }
 
