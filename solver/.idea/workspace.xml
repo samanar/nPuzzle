@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab15424-c4f5-4e4c-a273-cc1a76fda6bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/0xAX/notificator" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/codegangsta/envy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/codegangsta/gin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/cpuguy83/go-md2man" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/fsnotify/fsnotify" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/julesguesnon/gomon" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/mattn/go-shellwords" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nPuzzle/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/nPuzzle/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/search/bfs/bfs.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/bfs/bfs.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,7 +19,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="GOROOT" path="$USER_HOME$/Applications/goLang/go" />
+  <component name="GOROOT" path="$USER_HOME$/Applications/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -23,6 +29,7 @@
         <option value="file://$PROJECT_DIR$" />
       </list>
     </option>
+    <option name="useGoPathFromSystemEnvironment" value="false" />
   </component>
   <component name="ProjectId" id="1SxQUq0CEkek6hqIJtYMfYR3WtK" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -37,10 +44,11 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/structure/nPuzzle" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
