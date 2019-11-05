@@ -7,29 +7,29 @@ import (
 )
 
 type FIFO struct {
-	queue [] *nPuzzle.Node
+	Queue [] *nPuzzle.Node
 }
 
 func (fifo *FIFO) IsEmpty() bool {
-	return len(fifo.queue) == 0
+	return len(fifo.Queue) == 0
 }
 
 func (fifo *FIFO) Pop() *nPuzzle.Node {
-	if len(fifo.queue) == 0 {
+	if len(fifo.Queue) == 0 {
 		return nil
 	}
 	
-	head := fifo.queue[0]
-	fifo.queue = fifo.queue[1:]
+	head := fifo.Queue[0]
+	fifo.Queue = fifo.Queue[1:]
 	return head
 }
 
 func (fifo *FIFO) Push(node *nPuzzle.Node) {
-	fifo.queue = append(fifo.queue, node)
+	fifo.Queue = append(fifo.Queue, node)
 }
 
 func (fifo *FIFO) Print() {
-	for _, n := range fifo.queue {
+	for _, n := range fifo.Queue {
 		fmt.Println(n)
 	}
 }

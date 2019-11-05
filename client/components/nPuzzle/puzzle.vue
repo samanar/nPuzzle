@@ -27,13 +27,13 @@
         props: ['rowSize', 'colSize'],
         data() {
             return {
-                numbers: [],
+                numbers: [1,2,3,4,0,6,7,5,8],
                 win: false,
                 puzzle_item_size: '33'
             }
         },
         created() {
-            this.generateNumbers();
+            // this.generateNumbers();
         },
         methods: {
             checkWin() {

@@ -1,42 +1,48 @@
 package nPuzzle
 
+import (
+	"log"
+)
+
 type NPuzzle struct {
-	RowSize int
-	ColSize int
+	RowSize byte
+	ColSize byte
 	Root    *Node
 }
 
 type Node struct {
-	Numbers []int
+	Numbers []byte
 	Parent  *Node
-	Test    int
 }
 
-func convertIndexToCoordinates(index int, rowSize, colSize int) (int, int) {
-	i := index / rowSize
-	j := index - (i * rowSize)
+func convertIndexToCoordinates(index byte, rowSize, colSize byte) (byte, byte) {
+	i := byte(index / rowSize)
+	j := byte(index - (i * rowSize))
 	if j < 0 {
-		j = j * -1
+		j = -j
 	}
 	return i, j
 }
 
-func convertCoordinatesToIndex(i, j, rowSize int) int {
+func convertCoordinatesToIndex(i, j, rowSize byte) byte {
 	return i*rowSize + j
 }
 
-func (node *Node) findZero() int {
+func (node *Node) findZero() (bool , byte) {
 	for index, n := range node.Numbers {
 		if n == 0 {
-			return index
+			return false , byte(index)
 		}
 	}
-	return -1
+	return true , 0
 }
 
-func (node *Node) availableMoves(rowSize, colSize int) (int, int, [4]string) {
+func (node *Node) availableMoves(rowSize, colSize byte) (byte, byte, [4]string) {
 	var moves [4]string
-	zeroIndex := node.findZero()
+	err , zeroIndex := node.findZero()
+	if err {
+		log.Fatal("error when trying to find zero index")
+	}
 	zeroI, zeroJ := convertIndexToCoordinates(zeroIndex, rowSize, colSize)
 	if zeroI != 0 {
 		moves[0] = "up"
@@ -54,14 +60,14 @@ func (node *Node) availableMoves(rowSize, colSize int) (int, int, [4]string) {
 	return zeroI, zeroJ, moves
 }
 
-func swapNumbers(numbers []int, first, second int) []int {
-	result := make([]int, len(numbers))
+func swapNumbers(numbers []byte, first, second byte) []byte {
+	result := make([]byte, len(numbers))
 	copy(result, numbers)
 	result[first], result[second] = result[second], result[first]
 	return result
 }
 
-func (node Node) generateChild(direction string, zeroI, zeroJ, rowSize, colSize int) *Node {
+func (node Node) generateChild(direction string, zeroI, zeroJ, rowSize, colSize byte) *Node {
 	secondI := zeroI
 	secondJ := zeroJ
 	switch direction {
@@ -83,7 +89,7 @@ func (node Node) generateChild(direction string, zeroI, zeroJ, rowSize, colSize 
 	return result
 }
 
-func (node Node) GenerateChildren(rowSize, colSize int) []*Node {
+func (node Node) GenerateChildren(rowSize, colSize byte) []*Node {
 	var children []*Node
 	zeroI, zeroJ, moves := node.availableMoves(rowSize, colSize)
 	for _, n := range moves {
@@ -98,11 +104,25 @@ func (node Node) GenerateChildren(rowSize, colSize int) []*Node {
 }
 
 func (node Node) IsGoal() bool {
-	isGoal := true
-	for i := 1; i <= len(node.Numbers); i++ {
-		if node.Numbers[i-1] != i {
-			isGoal = false
+	misMatch := false
+	var i byte
+	for i = 0; i < byte(len(node.Numbers)) - 1; i++ {
+		if node.Numbers[i] != i + 1 {
+			misMatch = true
+			break
 		}
 	}
-	return isGoal
+	return !misMatch
+}
+
+func (node *Node) GeneratePath() [][] byte{
+	var path [][] byte
+	parent := node
+
+	for parent != nil {
+		path = append([][] byte {parent.Numbers} , path...)
+		parent = parent.Parent
+	}
+
+	return path
 }

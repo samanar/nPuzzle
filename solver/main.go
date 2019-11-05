@@ -21,9 +21,9 @@ type Message struct {
 	Title   string `json:"title"`
 	Type    string `json:"type"`
 	Body    string `json:"body"`
-	Numbers []int  `json:"numbers"`
-	RowSize int    `json:"rowSize"`
-	ColSize int    `json:"colSize"`
+	Numbers []byte  `json:"numbers"`
+	RowSize byte    `json:"rowSize"`
+	ColSize byte    `json:"colSize"`
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
