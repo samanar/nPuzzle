@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/0xAX/notificator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/cespare/xxhash" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/codegangsta/envy" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/codegangsta/gin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/cpuguy83/go-md2man" vcs="Git" />

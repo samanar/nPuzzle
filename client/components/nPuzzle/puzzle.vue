@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-card class="puzzle_container" :class="{'puzzle_container_win': win}">
+    <v-card class="puzzle_container" :class="{'puzzle_container_win': win}" style="position: relative">
+      <v-card class="loading_container" v-show="solving">
+        <robot></robot>
+      </v-card>
       <v-card
         outlined
         v-for="(number ,index) in numbers"
@@ -22,18 +25,21 @@
 </template>
 
 <script>
+    import robot from "~/components/general/robot";
+
     export default {
         name: "puzzle",
-        props: ['rowSize', 'colSize'],
+        props: ['rowSize', 'colSize', 'solving', 'showingDemo'],
+        components: {robot},
         data() {
             return {
-                numbers: [1,2,3,4,0,6,7,5,8],
+                numbers: [],
                 win: false,
                 puzzle_item_size: '33'
             }
         },
         created() {
-            // this.generateNumbers();
+            this.generateNumbers();
         },
         methods: {
             checkWin() {
@@ -46,23 +52,38 @@
                 this.win = !mismatch;
             },
             shuffle() {
-                this.numbers = this.shuffleArray(this.numbers);
-            },
-            shuffleArray(arr) {
-                let newArr = arr.slice();
-                for (let i = newArr.length - 1; i > 0; i--) {
-                    let j = Math.floor(Math.random() * (i + 1));
-                    let temp = newArr[i];
-                    newArr[i] = newArr[j];
-                    newArr[j] = temp;
+                let numberOfMoves = this.getRandomInt(250);
+                numberOfMoves += 50;
+                for (let i = 0; i < numberOfMoves; i++) {
+                    let randomMove = this.getRandomInt(5);
+                    switch (randomMove) {
+                        case 1:
+                            this.moveZero('up');
+                            break;
+                        case 2:
+                            this.moveZero('down');
+                            break;
+                        case 3:
+                            this.moveZero('left');
+                            break;
+                        case 4:
+                            this.moveZero('right');
+                            break;
+                    }
                 }
-                return newArr;
+            },
+            getRandomInt(max) {
+                let random = Math.floor(Math.random() * Math.floor(max));
+                if (random === 0) random = 1;
+                return random
             },
             generateNumbers() {
                 this.numbers = [];
                 let max = this.rowSize * this.colSize;
-                for (let i = 0; i < max; i++) this.numbers.push(i);
+                for (let i = 1; i < max; i++) this.numbers.push(i);
+                this.numbers.push(0);
                 this.shuffle();
+                this.$emit('resetCounter');
                 switch (this.rowSize) {
                     case 3:
                         this.puzzle_item_size = 33;
@@ -105,24 +126,22 @@
                 }
                 switch (direction) {
                     case 'up' :
-                        this.$emit('addLog', 'empty cell moved up');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i - 1, coordinates.j);
                         break;
                     case 'down':
-                        this.$emit('addLog', 'empty cell moved down');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i + 1, coordinates.j);
                         break;
                     case 'left':
-                        this.$emit('addLog', 'empty cell moved left');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i, coordinates.j - 1);
                         break;
                     case 'right' :
-                        this.$emit('addLog', 'empty cell moved right');
                         this.swapTwoNumbers(coordinates.i, coordinates.j, coordinates.i, coordinates.j + 1);
                         break;
                 }
             },
             swapTwoNumbers(first_i, first_j, second_i, second_j) {
+                if (first_i >= this.rowSize || first_j >= this.colSize || first_i < 0 | first_j < 0) return;
+                if (second_i >= this.rowSize || second_j >= this.colSize || second_i < 0 | second_j < 0) return;
                 if (!this.isZeroCoordinates(first_i, first_j)) {
                     return;
                 }
@@ -147,10 +166,28 @@
                 if (this.isZeroCoordinates(i, j + 1)) this.moveZero('left');
                 if (this.isZeroCoordinates(i, j - 1)) this.moveZero('right');
             },
+            demoAnswer(answer) {
+                this.$emit('setDemo', true);
+                let self = this;
+                (function show(i, length) {
+                    setTimeout(function () {
+                        self.$emit('incrementMoves');
+                        let demo = answer[i].split('-').map(Number);
+                        for (let i = 0; i < demo.length; i++) {
+                            self.$set(self.numbers, i, demo[i]);
+                        }
+                        i++;
+                        if (i < length) {
+                            show(i, answer.length);
+                        }
+                    }, 700);
+                })(0, answer.length);
+            }
         },
         watch: {
             win(newVal) {
                 this.$emit('setWin', newVal);
+                this.$emit('setDemo', false);
             },
             numbers() {
                 this.checkWin();
@@ -203,6 +240,16 @@
     text-align: center;
     justify-content: center;
     font-size: 2rem;
+  }
+
+  .loading_container {
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: 0;
+    bottom: 0
   }
 
 </style>

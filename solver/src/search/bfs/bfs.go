@@ -1,26 +1,22 @@
 package bfs
 
 import (
-	"bytes"
-	"fmt"
-	"strings"
-
+	"strconv"
+	
+	"github.com/cespare/xxhash"
 	"github.com/gorilla/websocket"
 	"nPuzzle"
 	nPuzzle2 "structure/nPuzzle"
+	"utils"
 )
 
-type Reply struct {
-	Title string `json:"title"`
-	Body  string `json:"body"`
-}
-
 func Solve(puzzle *nPuzzle.NPuzzle, conn *websocket.Conn) {
-	var visited [][]byte
-	logOutput := make(chan Reply)
-	go sendLogs(logOutput, conn)
+	visited := make(map[uint64]bool)
+	logOutput := make(chan utils.Reply)
+	var count = 0
+	logFilter := 100
+	go utils.SendLogs(logOutput, conn)
 	fifo := nPuzzle2.FIFO{}
-	count := 0
 	fifo.Push(puzzle.Root)
 	for !fifo.IsEmpty() {
 		child := fifo.Pop()
@@ -28,51 +24,21 @@ func Solve(puzzle *nPuzzle.NPuzzle, conn *websocket.Conn) {
 		for _, n := range children {
 			if n.IsGoal() {
 				path := n.GeneratePath()
-				logOutput <- Reply{Title: "log", Body: "goal found "}
-				for _ , pathItem := range path {
-					fmt.Println("path to goal" , pathItem)
-				}
+				utils.SendBfsLogs(logOutput, "goal", "goal found ", utils.ConvertArrayToString(path))
 				close(logOutput)
 				return
 			}
-			if !isRepeated(visited, n.Numbers) {
-				visited = append(visited, n.Numbers)
+			hash := xxhash.Sum64(n.Numbers)
+			if !visited[hash] {
 				count++
-				logOutput <- Reply{Title: "log", Body: convertArrayToString(n.Numbers)}
+				visited[hash] = true
+				logFilter = utils.UpdateFilter(count)
+				if count%logFilter == 0 {
+					utils.SendBfsLogs(logOutput, "log", strconv.Itoa(count), []string{})
+				}
 				fifo.Push(n)
 			}
 		}
 	}
-	fmt.Println("goal not found")
 	close(logOutput)
-}
-
-func sendLogs(logOutput chan Reply, conn *websocket.Conn) {
-	for {
-		select {
-		case val, ok := <-logOutput:
-			if ok {
-				fmt.Println(val)
-				err := conn.WriteJSON(val)
-				if err != nil {
-					fmt.Println("something wen wrong trying to send data to socket ", err)
-				}
-			} else {
-				return
-			}
-		}
-	}
-}
-
-func convertArrayToString(array []byte) string {
-	return strings.Trim(strings.Join(strings.Fields(fmt.Sprint(array)), "-"), "[]")
-}
-
-func isRepeated(visited [][]byte, target []byte) bool {
-	for _, n := range visited {
-		if bytes.Equal(n, target) {
-			return true
-		}
-	}
-	return false
 }
