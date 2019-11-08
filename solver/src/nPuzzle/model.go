@@ -13,6 +13,7 @@ type NPuzzle struct {
 type Node struct {
 	Numbers []byte
 	Parent  *Node
+	Weight int
 }
 
 func convertIndexToCoordinates(index byte, rowSize, colSize byte) (byte, byte) {

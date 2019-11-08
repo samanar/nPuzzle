@@ -10,10 +10,11 @@ import (
 	"utils"
 )
 
-func Solve(puzzle *nPuzzle.NPuzzle, conn *websocket.Conn) {
+func NPuzzleSolve(puzzle *nPuzzle.NPuzzle, conn *websocket.Conn) {
 	visited := make(map[uint64]bool)
+	visited[xxhash.Sum64(puzzle.Root.Numbers)] = true
 	logOutput := make(chan utils.Reply)
-	var count = 0
+	count := 0
 	logFilter := 100
 	go utils.SendLogs(logOutput, conn)
 	fifo := nPuzzle2.FIFO{}

@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	
+	"search/aStar"
 	"search/bfs"
-
+	"search/dfs"
+	
 	"nPuzzle"
-
+	
 	"github.com/gorilla/websocket"
 )
 
@@ -18,12 +21,13 @@ var upgrader = websocket.Upgrader{
 }
 
 type Message struct {
-	Title   string `json:"title"`
-	Type    string `json:"type"`
-	Body    string `json:"body"`
-	Numbers []byte  `json:"numbers"`
-	RowSize byte    `json:"rowSize"`
-	ColSize byte    `json:"colSize"`
+	Title     string `json:"title"`
+	Type      string `json:"type"`
+	Body      string `json:"body"`
+	Numbers   []byte `json:"numbers"`
+	Algorithm string `json:"algorithm"`
+	RowSize   byte   `json:"rowSize"`
+	ColSize   byte   `json:"colSize"`
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +45,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("client connected successfully")
-
+	
 	socketHandler(conn)
 	
 }
@@ -70,7 +74,7 @@ func socketHandler(conn *websocket.Conn) {
 		case "nPuzzle":
 			NPuzzleHandler(conn, &message)
 		}
-
+		
 	}
 }
 
@@ -82,13 +86,22 @@ func NPuzzleHandler(conn *websocket.Conn, message *Message) {
 			ColSize: message.ColSize,
 			Root:    &nPuzzle.Node{Numbers: message.Numbers},
 		}
-		bfs.Solve(&puzzle , conn)
+		switch message.Algorithm {
+		case "bfs":
+			bfs.NPuzzleSolve(&puzzle, conn)
+		case "dfs":
+			dfs.NPuzzleSolve(&puzzle, conn)
+		case "aStar":
+			aStar.NPuzzleSolve(&puzzle , conn)
+		default:
+			fmt.Println(message.Algorithm)
+		}
 	}
 }
 
 func setUpRoutes() {
-	http.HandleFunc("/", homePage);
-	http.HandleFunc("/ws", wsEndpoint);
+	http.HandleFunc("/", homePage)
+	http.HandleFunc("/ws", wsEndpoint)
 }
 
 func main() {

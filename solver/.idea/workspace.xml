@@ -2,30 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab15424-c4f5-4e4c-a273-cc1a76fda6bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../client/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/components/nPuzzle/puzzle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/components/nPuzzle/puzzle.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/components/nPuzzle/puzzleController.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/components/nPuzzle/puzzleController.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/static/images/robot.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../client/static/images/robot.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/0xAX/notificator" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/codegangsta/envy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/codegangsta/gin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/cpuguy83/go-md2man" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/fsnotify/fsnotify" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/julesguesnon/gomon" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/mattn/go-shellwords" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/search/bfs/bfs.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/bfs/bfs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nPuzzle/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/nPuzzle/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/search/bfs/bfs.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/bfs/nPuzzle.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" path="$USER_HOME$/Applications/go" />
   <component name="Git.Settings">
@@ -44,6 +40,7 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
@@ -53,7 +50,8 @@
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../client" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">

@@ -10,6 +10,13 @@
           @change="changeLevel"
           :disabled="solving || showingDemo">
         </v-select>
+        <v-select
+          outlined
+          label="solving algorithm"
+          v-model="algorithm"
+          :items="algorithms"
+          @change="changeAlgorithm"
+          :disabled="solving || showingDemo"></v-select>
         <v-btn
           color="primary"
           block
@@ -40,13 +47,19 @@
 </template>
 
 <script>
-
     export default {
         props: ['win', 'moves', 'solving', 'showingDemo'],
         name: "puzzleController",
         data() {
             return {
                 selectedLevel: 3,
+                algorithm: 'bfs',
+                algorithms: [
+                    {text: 'BFS', value: 'bfs'},
+                    {text: 'DFS', value: 'dfs'},
+                    {text: 'GREEDY', value: 'greedy'},
+                    {text: 'A*', value: 'aStar'}
+                ],
                 levels: [
                     {text: 'easy', value: 3},
                     {text: 'medium', value: 4},
@@ -64,6 +77,9 @@
             },
             solve() {
                 this.$emit('solve');
+            },
+            changeAlgorithm() {
+                this.$emit('changeAlgorithm', this.algorithm);
             }
         }
     }

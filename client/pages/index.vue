@@ -36,6 +36,7 @@
           :showingDemo="showingDemo"
           v-on:changeLevel="changeLevel"
           v-on:solve="solve"
+          v-on:changeAlgorithm="changeAlgorithm"
           v-on:newPuzzleGame="newPuzzleGame">
         </puzzle-controller>
       </v-col>
@@ -76,6 +77,7 @@
                 logs: [],
                 answer: [],
                 error: '',
+                algorithm: 'bfs',
                 solving: false,
                 showingDemo: false
             }
@@ -86,12 +88,6 @@
 
             this.socket.onopen = () => {
                 this.error = '';
-                self.socket.send(JSON.stringify({
-                    title: 'hello',
-                    type: 'nPuzzle',
-                    body: '',
-                    numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-                }));
             };
 
             this.socket.onclose = (event) => {
@@ -139,6 +135,7 @@
                 this.socket.send(JSON.stringify({
                     type: 'nPuzzle',
                     title: 'init',
+                    algorithm: this.algorithm,
                     rowSize: this.rowSize,
                     colSize: this.colSize,
                     numbers: this.$refs.puzzle.numbers
@@ -148,6 +145,9 @@
                 this.rowSize = level;
                 this.colSize = level;
                 this.moves = 0;
+            },
+            changeAlgorithm(algorithm) {
+                this.algorithm = algorithm;
             },
             newPuzzleGame() {
                 this.moves = 0;
