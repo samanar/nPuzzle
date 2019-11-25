@@ -2,7 +2,7 @@ package dfs
 
 import (
 	"strconv"
-	
+
 	"github.com/cespare/xxhash"
 	"github.com/gorilla/websocket"
 	"nPuzzle"
@@ -17,15 +17,14 @@ func NPuzzleSolve(puzzle *nPuzzle.NPuzzle, conn *websocket.Conn) {
 	count := 0
 	logOutput := make(chan utils.Reply)
 	go utils.SendLogs(logOutput, conn)
-	
 	stack.Push(puzzle.Root)
+	visited[xxhash.Sum64(puzzle.Root.Numbers)] = true
 	for !stack.IsEmpty() {
 		target := stack.Pop()
-		
-		hash := xxhash.Sum64(target.Numbers)
-		if !visited[hash] {
-			visited[hash] = true
-			for _, n := range target.GenerateChildren(puzzle.RowSize, puzzle.ColSize) {
+		for _, n := range target.GenerateChildren(puzzle.RowSize, puzzle.ColSize) {
+			hash := xxhash.Sum64(n.Numbers)
+			if !visited[hash] {
+				visited[hash] = true
 				if n.IsGoal() {
 					path := n.GeneratePath()
 					utils.SendBfsLogs(logOutput, "goal", "goal found ", utils.ConvertArrayToString(path))

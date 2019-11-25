@@ -180,7 +180,7 @@
                         if (i < length) {
                             show(i, answer.length);
                         }
-                    }, 500);
+                    }, 700);
                 })(0, answer.length);
             }
         },

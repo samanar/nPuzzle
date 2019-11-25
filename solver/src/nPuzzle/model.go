@@ -13,7 +13,8 @@ type NPuzzle struct {
 type Node struct {
 	Numbers []byte
 	Parent  *Node
-	Weight int
+	Weight  int
+	Height  int
 }
 
 func convertIndexToCoordinates(index byte, rowSize, colSize byte) (byte, byte) {
@@ -29,18 +30,18 @@ func convertCoordinatesToIndex(i, j, rowSize byte) byte {
 	return i*rowSize + j
 }
 
-func (node *Node) findZero() (bool , byte) {
+func (node *Node) findZero() (bool, byte) {
 	for index, n := range node.Numbers {
 		if n == 0 {
-			return false , byte(index)
+			return false, byte(index)
 		}
 	}
-	return true , 0
+	return true, 0
 }
 
 func (node *Node) availableMoves(rowSize, colSize byte) (byte, byte, [4]string) {
 	var moves [4]string
-	err , zeroIndex := node.findZero()
+	err, zeroIndex := node.findZero()
 	if err {
 		log.Fatal("error when trying to find zero index")
 	}
@@ -57,7 +58,7 @@ func (node *Node) availableMoves(rowSize, colSize byte) (byte, byte, [4]string) 
 	if zeroJ != 0 {
 		moves[3] = "left"
 	}
-	
+
 	return zeroI, zeroJ, moves
 }
 
@@ -100,15 +101,15 @@ func (node Node) GenerateChildren(rowSize, colSize byte) []*Node {
 		child := node.generateChild(n, zeroI, zeroJ, rowSize, colSize)
 		children = append(children, child)
 	}
-	
+
 	return children
 }
 
 func (node Node) IsGoal() bool {
 	misMatch := false
 	var i byte
-	for i = 0; i < byte(len(node.Numbers)) - 1; i++ {
-		if node.Numbers[i] != i + 1 {
+	for i = 0; i < byte(len(node.Numbers))-1; i++ {
+		if node.Numbers[i] != i+1 {
 			misMatch = true
 			break
 		}
@@ -116,14 +117,36 @@ func (node Node) IsGoal() bool {
 	return !misMatch
 }
 
-func (node *Node) GeneratePath() [][] byte{
+func (node *Node) GeneratePath() [][] byte {
 	var path [][] byte
 	parent := node
 
 	for parent != nil {
-		path = append([][] byte {parent.Numbers} , path...)
+		path = append([][] byte{parent.Numbers}, path...)
 		parent = parent.Parent
 	}
 
 	return path
+}
+
+func (node *Node) CalculateManhattanDistance(rowSize, colSize byte) int {
+	sum := 0
+	for index, n := range node.Numbers {
+		currentI, currentJ := convertIndexToCoordinates(byte(index), rowSize, colSize)
+		if n != 0 {
+			n--
+		}
+		positionedI, positionedJ := convertIndexToCoordinates(n, rowSize, colSize)
+		if currentI > positionedI {
+			sum += int(currentI - positionedI)
+		} else {
+			sum += int(positionedI - currentI)
+		}
+		if currentJ > positionedJ {
+			sum += int(currentJ - positionedJ)
+		} else {
+			sum += int(positionedJ - currentJ)
+		}
+	}
+	return sum
 }

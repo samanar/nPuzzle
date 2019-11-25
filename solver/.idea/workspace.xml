@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab15424-c4f5-4e4c-a273-cc1a76fda6bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../client/components/nPuzzle/puzzle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/components/nPuzzle/puzzle.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/components/nPuzzle/puzzleController.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/components/nPuzzle/puzzleController.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/pages/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/nPuzzle/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/nPuzzle/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/search/bfs/bfs.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/bfs/nPuzzle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/search/aStar/nPuzzle.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/aStar/nPuzzle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/search/dfs/nPuzzle.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/dfs/nPuzzle.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +20,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="$USER_HOME$/Applications/go" />
+  <component name="GOROOT" path="$USER_HOME$/Applications/goLang/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -51,7 +48,7 @@
     <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../client" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
